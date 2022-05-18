@@ -48,7 +48,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     );
 
     renderBackground();
-
     add(menu);
   }
 

@@ -10,6 +10,8 @@ class GameOfLife extends PositionComponent {
   late double cellHeightAmount;
   late Sprite cellSprite;
   List<List<Cell>> cells = [];
+  bool clearGame = false;
+  late PositionComponent board;
 
   GameOfLife({
     required this.gameWidth,
@@ -23,7 +25,8 @@ class GameOfLife extends PositionComponent {
   @override
   Future<void>? onLoad() async {
     createCells();
-    renderBoard();
+    board = createBoard();
+    add(board);
   }
 
   void createCells() {
@@ -112,14 +115,14 @@ class GameOfLife extends PositionComponent {
     }
   }
 
-  void renderBoard() {
+  PositionComponent createBoard() {
+    PositionComponent newBoard = PositionComponent();
     // render cell sprite
-
     for (int y = 0; y < cellHeightAmount; y++) {
       for (int x = 0; x < cellWidthAmount; x++) {
         Cell currentCell = cells[y][x];
 
-        add(currentCell
+        newBoard.add(currentCell
           ..sprite = cellSprite
           ..position = Vector2(
               cellSize * currentCell.line, cellSize * currentCell.column)
@@ -129,19 +132,25 @@ class GameOfLife extends PositionComponent {
           ));
       }
     }
+    return newBoard;
   }
 
   void clear() {
-    for (int y = 0; y < cellHeightAmount; y++) {
-      for (int x = 0; x < cellWidthAmount; x++) {
-        cells[y][x].next = 0;
-      }
-    }
+    clearGame = true;
   }
 
   @override
   void update(double dt) {
     super.update(dt);
+
+    if (clearGame == true) {
+      remove(board);
+      createCells();
+      board = createBoard();
+      add(board);
+      clearGame = false;
+    }
+
     // Update cell sprite
     for (int y = 0; y < cellHeightAmount; y++) {
       for (int x = 0; x < cellWidthAmount; x++) {
