@@ -20,14 +20,11 @@ class SpeedSlider extends PositionComponent {
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
-    Paint paint1 = Paint()
-      ..color = Color.fromARGB(0, 0, 0, 0)
-      ..style = PaintingStyle.fill;
 
     SpriteButtonComponent plusButton = createIncreaseButton();
     SpriteButtonComponent minusButton = createDecreaseButton();
 
-    add(createText('Speed'));
+    add(createText('${gameSpeed}'));
     add(plusButton..position = Vector2(55, 0));
     add(minusButton..position = Vector2(-55, 0));
   }

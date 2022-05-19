@@ -9,11 +9,12 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 
 class MyGame extends FlameGame with HasTappables, HasHoverables {
-  double gameSpeedInSeconds = 0.56;
   late Timer gameTick;
   late GameOfLife game;
   late Menu menu;
   late GameHud hud;
+  final List<double> gameSpeedList = [0.04, 0.1, 0.4, 0.8, 1];
+  late double gameSpeedInSeconds = gameSpeedList[2];
 
   @override
   Future<void>? onLoad() async {
@@ -93,15 +94,19 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   }
 
   void increaseSpeed() {
-    double newSpeed = gameSpeedInSeconds - 0.1;
-    if (newSpeed > 0.1) {
-      gameSpeedInSeconds = newSpeed;
+    int index = gameSpeedList.indexOf(gameSpeedInSeconds) + 1;
+    if (index != -1) {
+      gameSpeedInSeconds = gameSpeedList[index];
     }
+
     restartTimer();
   }
 
   void decreaseSpeed() {
-    gameSpeedInSeconds = gameSpeedInSeconds + 0.1;
+    int index = gameSpeedList.indexOf(gameSpeedInSeconds) - 1;
+    if (index != -1) {
+      gameSpeedInSeconds = gameSpeedList[index];
+    }
     restartTimer();
   }
 
