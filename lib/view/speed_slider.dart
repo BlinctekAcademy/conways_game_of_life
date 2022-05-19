@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class SpeedSlider extends PositionComponent {
   double gameSpeed;
+  final List<double> gameSpeedList;
   final Sprite plusSprite;
   final Sprite minusSprite;
   final Function increaseSpeed;
@@ -11,6 +12,7 @@ class SpeedSlider extends PositionComponent {
 
   SpeedSlider({
     required this.gameSpeed,
+    required this.gameSpeedList,
     required this.plusSprite,
     required this.minusSprite,
     required this.increaseSpeed,
@@ -24,7 +26,7 @@ class SpeedSlider extends PositionComponent {
     SpriteButtonComponent plusButton = createIncreaseButton();
     SpriteButtonComponent minusButton = createDecreaseButton();
 
-    add(createText('${gameSpeed}'));
+    add(createText(speedLabel()));
     add(plusButton..position = Vector2(55, 0));
     add(minusButton..position = Vector2(-55, 0));
   }
@@ -66,5 +68,21 @@ class SpeedSlider extends PositionComponent {
       ..anchor = Anchor.topCenter;
 
     return text;
+  }
+
+  String speedLabel() {
+    if (gameSpeedList.indexOf(gameSpeed) == 0) {
+      return 'Crazy';
+    } else if (gameSpeedList.indexOf(gameSpeed) == 1) {
+      return 'Fast';
+    } else if (gameSpeedList.indexOf(gameSpeed) == 2) {
+      return 'Medium';
+    } else if (gameSpeedList.indexOf(gameSpeed) == 3) {
+      return 'Slow';
+    } else if (gameSpeedList.indexOf(gameSpeed) == 4) {
+      return 'Zzzz';
+    }
+
+    return 'Error';
   }
 }

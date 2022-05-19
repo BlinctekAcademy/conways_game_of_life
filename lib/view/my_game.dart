@@ -13,7 +13,7 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   late GameOfLife game;
   late Menu menu;
   late GameHud hud;
-  final List<double> gameSpeedList = [0.04, 0.1, 0.4, 0.8, 1];
+  final List<double> gameSpeedList = [0.04, 0.1, 0.4, 0.8, 1.2];
   late double gameSpeedInSeconds = gameSpeedList[2];
 
   @override
@@ -72,6 +72,7 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
       minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
       timer: gameTick,
       gameSpeed: gameSpeedInSeconds,
+      gameSpeedList: gameSpeedList,
       game: game,
       increaseSpeed: increaseSpeed,
       decreaseSpeed: decreaseSpeed,
@@ -94,20 +95,19 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   }
 
   void increaseSpeed() {
-    int index = gameSpeedList.indexOf(gameSpeedInSeconds) + 1;
+    int index = gameSpeedList.indexOf(gameSpeedInSeconds);
     if (index != -1) {
-      gameSpeedInSeconds = gameSpeedList[index];
+      gameSpeedInSeconds = gameSpeedList[index + 1];
+      restartTimer();
     }
-
-    restartTimer();
   }
 
   void decreaseSpeed() {
-    int index = gameSpeedList.indexOf(gameSpeedInSeconds) - 1;
-    if (index != -1) {
-      gameSpeedInSeconds = gameSpeedList[index];
+    int index = gameSpeedList.indexOf(gameSpeedInSeconds);
+    if (index != -1 && index != 0) {
+      gameSpeedInSeconds = gameSpeedList[index - 1];
+      restartTimer();
     }
-    restartTimer();
   }
 
   void restartTimer() {
