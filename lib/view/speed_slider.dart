@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 
 class SpeedSlider extends PositionComponent {
   double gameSpeed;
-  Sprite sprite;
+  final Sprite plusSprite;
+  final Sprite minusSprite;
   final Function increaseSpeed;
   final Function decreaseSpeed;
 
   SpeedSlider({
     required this.gameSpeed,
-    required this.sprite,
+    required this.plusSprite,
+    required this.minusSprite,
     required this.increaseSpeed,
     required this.decreaseSpeed,
   });
@@ -22,23 +24,38 @@ class SpeedSlider extends PositionComponent {
       ..color = Color.fromARGB(0, 0, 0, 0)
       ..style = PaintingStyle.fill;
 
-    SpriteButtonComponent plusButton = createButton();
+    SpriteButtonComponent plusButton = createIncreaseButton();
+    SpriteButtonComponent minusButton = createDecreaseButton();
 
     add(createText('Speed'));
-    add(plusButton..position = Vector2(75, 0));
+    add(plusButton..position = Vector2(55, 0));
+    add(minusButton..position = Vector2(-55, 0));
   }
 
-  SpriteButtonComponent createButton() {
-    SpriteButtonComponent sliderComponent = SpriteButtonComponent(
-      button: sprite,
+  SpriteButtonComponent createIncreaseButton() {
+    SpriteButtonComponent plusComponent = SpriteButtonComponent(
+      button: plusSprite,
       onPressed: () {
         increaseSpeed();
       },
       size: Vector2(40, 40),
-      anchor: Anchor.topCenter,
+      anchor: Anchor.topLeft,
     );
 
-    return sliderComponent;
+    return plusComponent;
+  }
+
+  SpriteButtonComponent createDecreaseButton() {
+    SpriteButtonComponent minusComponent = SpriteButtonComponent(
+      button: minusSprite,
+      onPressed: () {
+        decreaseSpeed();
+      },
+      size: Vector2(40, 40),
+      anchor: Anchor.topRight,
+    );
+
+    return minusComponent;
   }
 
   TextComponent createText(String string) {

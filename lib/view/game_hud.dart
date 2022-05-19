@@ -15,6 +15,7 @@ class GameHud extends PositionComponent with HasGameRef {
   final Sprite minusButtonSprite;
   final GameOfLife game;
   final Function increaseSpeed;
+  final Function decreaseSpeed;
   late Vector2 gameSize;
   double gameSpeed;
   Timer timer;
@@ -29,6 +30,7 @@ class GameHud extends PositionComponent with HasGameRef {
     required this.gameSpeed,
     required this.game,
     required this.increaseSpeed,
+    required this.decreaseSpeed,
   });
 
   @override
@@ -99,12 +101,14 @@ class GameHud extends PositionComponent with HasGameRef {
 
     SpeedSlider clearButtonComponent = SpeedSlider(
         gameSpeed: gameSpeed,
-        sprite: plusButtonSprite,
+        plusSprite: plusButtonSprite,
+        minusSprite: minusButtonSprite,
         increaseSpeed: () {
-          print("increased");
           increaseSpeed();
         },
-        decreaseSpeed: () {})
+        decreaseSpeed: () {
+          decreaseSpeed();
+        })
       ..size = Vector2(200, 80)
       ..anchor = Anchor.topRight
       ..position = Vector2(gameSize[0] - 10, 0);

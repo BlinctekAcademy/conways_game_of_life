@@ -64,15 +64,17 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
 
   void createHud() {
     hud = GameHud(
-        clearSprite: Sprite(images.fromCache("clear.png")),
-        resumeSprite: Sprite(images.fromCache("resume.png")),
-        pauseSprite: Sprite(images.fromCache("pause.png")),
-        plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
-        minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
-        timer: gameTick,
-        gameSpeed: gameSpeedInSeconds,
-        game: game,
-        increaseSpeed: increaseSpeed);
+      clearSprite: Sprite(images.fromCache("clear.png")),
+      resumeSprite: Sprite(images.fromCache("resume.png")),
+      pauseSprite: Sprite(images.fromCache("pause.png")),
+      plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
+      minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
+      timer: gameTick,
+      gameSpeed: gameSpeedInSeconds,
+      game: game,
+      increaseSpeed: increaseSpeed,
+      decreaseSpeed: decreaseSpeed,
+    );
   }
 
   void startTimer({bool isPaused = true}) {
@@ -91,16 +93,25 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   }
 
   void increaseSpeed() {
-    double newSpeed = gameSpeedInSeconds - 0.2;
+    double newSpeed = gameSpeedInSeconds - 0.1;
     if (newSpeed > 0.1) {
-      bool isPaused = !gameTick.isRunning();
-      gameSpeedInSeconds = gameSpeedInSeconds - 0.2;
-      gameTick.stop();
-      startTimer(isPaused: isPaused);
-      remove(hud);
-      createHud();
-      add(hud);
+      gameSpeedInSeconds = newSpeed;
     }
+    restartTimer();
+  }
+
+  void decreaseSpeed() {
+    gameSpeedInSeconds = gameSpeedInSeconds + 0.1;
+    restartTimer();
+  }
+
+  void restartTimer() {
+    bool isPaused = !gameTick.isRunning();
+    gameTick.stop();
+    startTimer(isPaused: isPaused);
+    remove(hud);
+    createHud();
+    add(hud);
   }
 
   void renderBackground() {
@@ -113,6 +124,5 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   void update(double dt) {
     super.update(dt);
     gameTick.update(dt);
-    print(gameSpeedInSeconds);
   }
 }
