@@ -113,8 +113,8 @@ class GameHud extends PositionComponent with HasGameRef {
           decreaseSpeed();
         })
       ..size = Vector2(200, 80)
-      ..anchor = Anchor.topRight
-      ..position = Vector2(gameSize[0] - 10, 0);
+      ..anchor = Anchor.topCenter
+      ..position = Vector2(gameSize[0] - 30, 12);
 
     return clearButtonComponent;
   }

@@ -27,8 +27,8 @@ class SpeedSlider extends PositionComponent {
     SpriteButtonComponent minusButton = createDecreaseButton();
 
     add(createText(speedLabel()));
-    add(plusButton..position = Vector2(55, 0));
-    add(minusButton..position = Vector2(-55, 0));
+    add(plusButton..position = Vector2(58, 0));
+    add(minusButton..position = Vector2(-58, 0));
   }
 
   SpriteButtonComponent createIncreaseButton() {
