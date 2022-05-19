@@ -1,23 +1,34 @@
 import 'package:antoniogameoflife/logic/game_of_life.dart';
 import 'package:antoniogameoflife/view/pause_button.dart';
+import 'package:antoniogameoflife/view/speed_slider.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 class GameHud extends PositionComponent with HasGameRef {
   final Sprite clearSprite;
   final Sprite resumeSprite;
   final Sprite pauseSprite;
+  final Sprite plusButtonSprite;
+  final Sprite minusButtonSprite;
   final GameOfLife game;
+  final Function increaseSpeed;
   late Vector2 gameSize;
-  var timer;
+  double gameSpeed;
+  Timer timer;
 
   GameHud({
     required this.clearSprite,
     required this.resumeSprite,
     required this.pauseSprite,
+    required this.plusButtonSprite,
+    required this.minusButtonSprite,
     required this.timer,
+    required this.gameSpeed,
     required this.game,
+    required this.increaseSpeed,
   });
 
   @override
@@ -30,8 +41,9 @@ class GameHud extends PositionComponent with HasGameRef {
     RectangleComponent box = renderBox(gameSize);
     SpriteButtonComponent clearButton = renderClearButton();
     PauseButton pauseButton = renderPause();
+    var slider = createSlider();
 
-    box.addAll([pauseButton, clearButton]);
+    box.addAll([pauseButton, clearButton, slider]);
     add(box);
   }
 
@@ -74,8 +86,29 @@ class GameHud extends PositionComponent with HasGameRef {
     )
       ..size = Vector2(80, 80)
       ..anchor = Anchor.topCenter
-      ..position = Vector2(gameSize[0] / 2, 0);
+      ..position = Vector2(gameSize[0] / 2, 0)
+      ..sprite = timer.isRunning() ? pauseSprite : resumeSprite;
 
     return pause;
+  }
+
+  SpeedSlider createSlider() {
+    Paint paint1 = Paint()
+      ..color = Color.fromARGB(0, 0, 0, 0)
+      ..style = PaintingStyle.fill;
+
+    SpeedSlider clearButtonComponent = SpeedSlider(
+        gameSpeed: gameSpeed,
+        sprite: plusButtonSprite,
+        increaseSpeed: () {
+          print("increased");
+          increaseSpeed();
+        },
+        decreaseSpeed: () {})
+      ..size = Vector2(200, 80)
+      ..anchor = Anchor.topRight
+      ..position = Vector2(gameSize[0] - 10, 0);
+
+    return clearButtonComponent;
   }
 }

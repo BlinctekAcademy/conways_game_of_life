@@ -15,7 +15,6 @@ class PauseButton extends SpriteComponent with Tappable {
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
-    sprite = resumeSprite;
   }
 
   @override

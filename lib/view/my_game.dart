@@ -13,6 +13,7 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   late Timer gameTick;
   late GameOfLife game;
   late Menu menu;
+  late GameHud hud;
 
   @override
   Future<void>? onLoad() async {
@@ -31,6 +32,8 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     await images.load("resume.png");
     await images.load("clear.png");
     await images.load("play.png");
+    await images.load("plus_button.png");
+    await images.load("minus_button.png");
 
     // Background sprite
     await images.load("background.jpg");
@@ -48,22 +51,31 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     );
 
     renderBackground();
-    add(menu);
+    //add(menu);
+    startGame();
   }
 
   void startGame() async {
     add(game);
-    remove(menu);
-    GameHud hud = GameHud(
-        clearSprite: Sprite(images.fromCache("clear.png")),
-        resumeSprite: Sprite(images.fromCache("resume.png")),
-        pauseSprite: Sprite(images.fromCache("pause.png")),
-        timer: gameTick,
-        game: game);
+    //remove(menu);
+    createHud();
     add(hud);
   }
 
-  void startTimer() {
+  void createHud() {
+    hud = GameHud(
+        clearSprite: Sprite(images.fromCache("clear.png")),
+        resumeSprite: Sprite(images.fromCache("resume.png")),
+        pauseSprite: Sprite(images.fromCache("pause.png")),
+        plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
+        minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
+        timer: gameTick,
+        gameSpeed: gameSpeedInSeconds,
+        game: game,
+        increaseSpeed: increaseSpeed);
+  }
+
+  void startTimer({bool isPaused = true}) {
     gameTick = Timer(
       gameSpeedInSeconds,
       onTick: () {
@@ -73,7 +85,22 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
       repeat: true,
     );
 
-    gameTick.pause();
+    if (isPaused == true) {
+      gameTick.pause();
+    }
+  }
+
+  void increaseSpeed() {
+    double newSpeed = gameSpeedInSeconds - 0.2;
+    if (newSpeed > 0.1) {
+      bool isPaused = !gameTick.isRunning();
+      gameSpeedInSeconds = gameSpeedInSeconds - 0.2;
+      gameTick.stop();
+      startTimer(isPaused: isPaused);
+      remove(hud);
+      createHud();
+      add(hud);
+    }
   }
 
   void renderBackground() {
@@ -86,5 +113,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   void update(double dt) {
     super.update(dt);
     gameTick.update(dt);
+    print(gameSpeedInSeconds);
   }
 }

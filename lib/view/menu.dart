@@ -115,18 +115,6 @@ class Menu extends PositionComponent {
     add(playButton);
   }
 
-  void createClearButton() {
-    SpriteButtonComponent clearButtonComponent = SpriteButtonComponent(
-      button: Sprite(clearButtonImage),
-      onPressed: () {},
-      size: Vector2(200, 80),
-      anchor: Anchor.topCenter,
-      position: Vector2(parentWidth / 2, 500),
-    );
-
-    add(clearButtonComponent);
-  }
-
   @override
   void update(double dt) {
     super.update(dt);
