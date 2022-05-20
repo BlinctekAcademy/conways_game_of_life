@@ -1,6 +1,6 @@
 import 'package:antoniogameoflife/logic/game_of_life.dart';
 import 'package:antoniogameoflife/view/pause_button.dart';
-import 'package:antoniogameoflife/view/speed_slider.dart';
+import 'package:antoniogameoflife/view/speed_controller.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'dart:ui';
@@ -45,9 +45,9 @@ class GameHud extends PositionComponent with HasGameRef {
     RectangleComponent box = renderBox(gameSize);
     SpriteButtonComponent clearButton = renderClearButton();
     PauseButton pauseButton = renderPause();
-    var slider = createSlider();
+    var speedController = createSlider();
 
-    box.addAll([pauseButton, clearButton, slider]);
+    box.addAll([pauseButton, clearButton, speedController]);
     add(box);
   }
 
@@ -96,12 +96,12 @@ class GameHud extends PositionComponent with HasGameRef {
     return pause;
   }
 
-  SpeedSlider createSlider() {
+  SpeedController createSlider() {
     Paint paint1 = Paint()
       ..color = Color.fromARGB(0, 0, 0, 0)
       ..style = PaintingStyle.fill;
 
-    SpeedSlider clearButtonComponent = SpeedSlider(
+    SpeedController clearButtonComponent = SpeedController(
         gameSpeed: gameSpeed,
         gameSpeedList: gameSpeedList,
         plusSprite: plusButtonSprite,

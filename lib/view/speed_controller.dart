@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 
-class SpeedSlider extends PositionComponent {
+class SpeedController extends PositionComponent {
   double gameSpeed;
   final List<double> gameSpeedList;
   final Sprite plusSprite;
@@ -10,7 +10,7 @@ class SpeedSlider extends PositionComponent {
   final Function increaseSpeed;
   final Function decreaseSpeed;
 
-  SpeedSlider({
+  SpeedController({
     required this.gameSpeed,
     required this.gameSpeedList,
     required this.plusSprite,
