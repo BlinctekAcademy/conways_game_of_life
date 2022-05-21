@@ -1,4 +1,5 @@
 import 'package:antoniogameoflife/logic/game_of_life.dart';
+import 'package:antoniogameoflife/view/cell_size_controller.dart';
 import 'package:antoniogameoflife/view/pause_button.dart';
 import 'package:antoniogameoflife/view/speed_controller.dart';
 import 'package:flame/components.dart';
@@ -16,9 +17,13 @@ class GameHud extends PositionComponent with HasGameRef {
   final GameOfLife game;
   final Function increaseSpeed;
   final Function decreaseSpeed;
+  final Function increaseCellSize;
+  final Function decreaseCellSize;
   late Vector2 gameSize;
   final List<double> gameSpeedList;
+  final List<double> cellSizeList;
   double gameSpeed;
+  double cellSize;
   Timer timer;
 
   GameHud({
@@ -30,9 +35,13 @@ class GameHud extends PositionComponent with HasGameRef {
     required this.timer,
     required this.gameSpeed,
     required this.gameSpeedList,
+    required this.cellSize,
+    required this.cellSizeList,
     required this.game,
     required this.increaseSpeed,
     required this.decreaseSpeed,
+    required this.increaseCellSize,
+    required this.decreaseCellSize,
   });
 
   @override
@@ -45,9 +54,10 @@ class GameHud extends PositionComponent with HasGameRef {
     RectangleComponent box = renderBox(gameSize);
     SpriteButtonComponent clearButton = renderClearButton();
     PauseButton pauseButton = renderPause();
-    var speedController = createSlider();
+    SpeedController speedController = createSpeedController();
+    CellSizeController cellSizeController = createCellSizeController();
 
-    box.addAll([pauseButton, clearButton, speedController]);
+    box.addAll([pauseButton, clearButton, speedController, cellSizeController]);
     add(box);
   }
 
@@ -96,7 +106,7 @@ class GameHud extends PositionComponent with HasGameRef {
     return pause;
   }
 
-  SpeedController createSlider() {
+  SpeedController createSpeedController() {
     Paint paint1 = Paint()
       ..color = Color.fromARGB(0, 0, 0, 0)
       ..style = PaintingStyle.fill;
@@ -117,5 +127,28 @@ class GameHud extends PositionComponent with HasGameRef {
       ..position = Vector2(gameSize[0] - 30, 12);
 
     return clearButtonComponent;
+  }
+
+  CellSizeController createCellSizeController() {
+    Paint paint1 = Paint()
+      ..color = Color.fromARGB(0, 0, 0, 0)
+      ..style = PaintingStyle.fill;
+
+    CellSizeController cellSizeButton = CellSizeController(
+        cellSize: cellSize,
+        cellSizeList: cellSizeList,
+        plusSprite: plusButtonSprite,
+        minusSprite: minusButtonSprite,
+        increase: () {
+          increaseCellSize();
+        },
+        decrease: () {
+          decreaseCellSize();
+        })
+      ..size = Vector2(200, 80)
+      ..anchor = Anchor.topCenter
+      ..position = Vector2(gameSize[0] - 250, 12);
+
+    return cellSizeButton;
   }
 }

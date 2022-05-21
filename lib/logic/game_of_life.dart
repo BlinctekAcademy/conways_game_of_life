@@ -17,6 +17,7 @@ class GameOfLife extends PositionComponent {
     required this.gameWidth,
     required this.gameHeight,
     required this.cellSize,
+    required this.cellSprite,
   }) {
     cellWidthAmount = (gameWidth / cellSize).floorToDouble();
     cellHeightAmount = (gameHeight / cellSize).floorToDouble();
@@ -24,6 +25,10 @@ class GameOfLife extends PositionComponent {
 
   @override
   Future<void>? onLoad() async {
+    renderBoard();
+  }
+
+  void renderBoard() {
     createCells();
     board = createBoard();
     add(board);

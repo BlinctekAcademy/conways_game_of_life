@@ -13,22 +13,18 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   late GameOfLife game;
   late Menu menu;
   late GameHud hud;
+
   final List<double> gameSpeedList = [0.04, 0.1, 0.4, 0.8, 1.2];
-  late double gameSpeedInSeconds = gameSpeedList[2];
+  final List<double> cellSizeList = [20, 30, 50];
+  late double gameSpeedInSeconds;
+  late double cellSize;
 
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
-    startTimer();
-
-    game = GameOfLife(
-      gameWidth: size[0].floor(),
-      gameHeight: size[1].floor() - 100,
-      cellSize: 30,
-    );
 
     // Load Sprites
-    game.cellSprite = await loadSprite("cell_sprite.png");
+    await images.load("cell_sprite.png");
     await images.load("pause.png");
     await images.load("resume.png");
     await images.load("clear.png");
@@ -40,7 +36,12 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     await images.load("background.jpg");
 
     // Load audio
-    await FlameAudio.audioCache.load('song.mp3');
+    //await FlameAudio.audioCache.load('song.mp3');
+
+    gameSpeedInSeconds = gameSpeedList[1];
+    cellSize = cellSizeList[1];
+    startTimer();
+    createGame();
 
     menu = Menu(
       parentWidth: size[0],
@@ -48,35 +49,49 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
       clearButtonImage: images.fromCache("clear.png"),
       startGame: () {
         startGame();
+        remove(menu);
       },
     );
 
     renderBackground();
-    //add(menu);
-    startGame();
+    add(menu);
   }
 
-  void startGame() async {
+  GameOfLife createGame() {
+    game = GameOfLife(
+        gameWidth: size[0].floor(),
+        gameHeight: size[1].floor() - 100,
+        cellSize: cellSize,
+        cellSprite: Sprite(
+          images.fromCache("cell_sprite.png"),
+        ));
+
+    return game;
+  }
+
+  void startGame() {
     add(game);
-    //remove(menu);
     createHud();
     add(hud);
   }
 
   void createHud() {
     hud = GameHud(
-      clearSprite: Sprite(images.fromCache("clear.png")),
-      resumeSprite: Sprite(images.fromCache("resume.png")),
-      pauseSprite: Sprite(images.fromCache("pause.png")),
-      plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
-      minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
-      timer: gameTick,
-      gameSpeed: gameSpeedInSeconds,
-      gameSpeedList: gameSpeedList,
-      game: game,
-      increaseSpeed: increaseSpeed,
-      decreaseSpeed: decreaseSpeed,
-    );
+        clearSprite: Sprite(images.fromCache("clear.png")),
+        resumeSprite: Sprite(images.fromCache("resume.png")),
+        pauseSprite: Sprite(images.fromCache("pause.png")),
+        plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
+        minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
+        timer: gameTick,
+        gameSpeed: gameSpeedInSeconds,
+        gameSpeedList: gameSpeedList,
+        cellSize: cellSize,
+        cellSizeList: cellSizeList,
+        game: game,
+        increaseSpeed: increaseSpeed,
+        decreaseSpeed: decreaseSpeed,
+        increaseCellSize: increaseCellSize,
+        decreaseCellSize: decreaseCellSize);
   }
 
   void startTimer({bool isPaused = true}) {
@@ -107,6 +122,36 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     if (index != -1 && index != 0) {
       gameSpeedInSeconds = gameSpeedList[index - 1];
       restartTimer();
+    }
+  }
+
+  void increaseCellSize() {
+    int index = cellSizeList.indexOf(cellSize);
+    if (index != -1 && index < cellSizeList.length) {
+      cellSize = cellSizeList[index + 1];
+      gameTick.stop();
+
+      remove(hud);
+      remove(game);
+      createGame();
+      createHud();
+      add(game);
+      add(hud);
+    }
+  }
+
+  void decreaseCellSize() {
+    int index = cellSizeList.indexOf(cellSize);
+    if (index != -1 && index != 0) {
+      cellSize = cellSizeList[index - 1];
+      gameTick.stop();
+
+      remove(hud);
+      remove(game);
+      createGame();
+      createHud();
+      add(game);
+      add(hud);
     }
   }
 
