@@ -4,6 +4,7 @@ import 'package:antoniogameoflife/view/background.dart';
 import 'package:antoniogameoflife/view/game_hud.dart';
 import 'package:antoniogameoflife/view/menu.dart';
 import 'package:antoniogameoflife/view/pause_button.dart';
+import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
@@ -31,29 +32,22 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     await images.load("play.png");
     await images.load("plus_button.png");
     await images.load("minus_button.png");
+    await images.load("music.png");
+    await images.load("no_music.png");
 
     // Background sprite
     await images.load("background.jpg");
 
-    // Load audio
-    //await FlameAudio.audioCache.load('song.mp3');
+    // Load music
+    BackgroundSong.initialize();
 
-    gameSpeedInSeconds = gameSpeedList[1];
+    gameSpeedInSeconds = gameSpeedList[2];
     cellSize = cellSizeList[1];
     startTimer();
     createGame();
-
-    menu = Menu(
-      parentWidth: size[0],
-      playButtonImage: images.fromCache("play.png"),
-      clearButtonImage: images.fromCache("clear.png"),
-      startGame: () {
-        startGame();
-        remove(menu);
-      },
-    );
-
+    createMenu();
     renderBackground();
+
     add(menu);
   }
 
@@ -75,6 +69,18 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     add(hud);
   }
 
+  void createMenu() {
+    menu = Menu(
+      parentWidth: size[0],
+      playButtonImage: images.fromCache("play.png"),
+      clearButtonImage: images.fromCache("clear.png"),
+      startGame: () {
+        startGame();
+        remove(menu);
+      },
+    );
+  }
+
   void createHud() {
     hud = GameHud(
         clearSprite: Sprite(images.fromCache("clear.png")),
@@ -82,6 +88,8 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
         pauseSprite: Sprite(images.fromCache("pause.png")),
         plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
         minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
+        musicSprite: Sprite(images.fromCache("music.png")),
+        noMusicSprite: Sprite(images.fromCache("no_music.png")),
         timer: gameTick,
         gameSpeed: gameSpeedInSeconds,
         gameSpeedList: gameSpeedList,
@@ -153,6 +161,16 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
       add(game);
       add(hud);
     }
+  }
+
+  void toggleMusic() {
+    /*
+    if (music.isPlaying == false) {
+      music.play('song.mp3');
+    } else {
+      music.pause();
+    }
+    */
   }
 
   void restartTimer() {

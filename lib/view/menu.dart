@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:antoniogameoflife/view/play_button.dart';
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
 import 'package:flame/widgets.dart';
+import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart' hide Image;
 
 class Menu extends PositionComponent {

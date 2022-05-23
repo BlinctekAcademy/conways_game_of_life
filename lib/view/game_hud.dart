@@ -1,11 +1,12 @@
 import 'package:antoniogameoflife/logic/game_of_life.dart';
 import 'package:antoniogameoflife/view/cell_size_controller.dart';
+import 'package:antoniogameoflife/view/music_button.dart';
 import 'package:antoniogameoflife/view/pause_button.dart';
 import 'package:antoniogameoflife/view/speed_controller.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
+import 'package:flame_audio/bgm.dart';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class GameHud extends PositionComponent with HasGameRef {
@@ -14,6 +15,8 @@ class GameHud extends PositionComponent with HasGameRef {
   final Sprite pauseSprite;
   final Sprite plusButtonSprite;
   final Sprite minusButtonSprite;
+  final Sprite musicSprite;
+  final Sprite noMusicSprite;
   final GameOfLife game;
   final Function increaseSpeed;
   final Function decreaseSpeed;
@@ -32,6 +35,8 @@ class GameHud extends PositionComponent with HasGameRef {
     required this.pauseSprite,
     required this.plusButtonSprite,
     required this.minusButtonSprite,
+    required this.musicSprite,
+    required this.noMusicSprite,
     required this.timer,
     required this.gameSpeed,
     required this.gameSpeedList,
@@ -56,8 +61,15 @@ class GameHud extends PositionComponent with HasGameRef {
     PauseButton pauseButton = renderPause();
     SpeedController speedController = createSpeedController();
     CellSizeController cellSizeController = createCellSizeController();
+    MusicButton musicButton = createMusicButton();
 
-    box.addAll([pauseButton, clearButton, speedController, cellSizeController]);
+    box.addAll([
+      pauseButton,
+      clearButton,
+      speedController,
+      cellSizeController,
+      musicButton
+    ]);
     add(box);
   }
 
@@ -107,10 +119,6 @@ class GameHud extends PositionComponent with HasGameRef {
   }
 
   SpeedController createSpeedController() {
-    Paint paint1 = Paint()
-      ..color = Color.fromARGB(0, 0, 0, 0)
-      ..style = PaintingStyle.fill;
-
     SpeedController clearButtonComponent = SpeedController(
         gameSpeed: gameSpeed,
         gameSpeedList: gameSpeedList,
@@ -130,10 +138,6 @@ class GameHud extends PositionComponent with HasGameRef {
   }
 
   CellSizeController createCellSizeController() {
-    Paint paint1 = Paint()
-      ..color = Color.fromARGB(0, 0, 0, 0)
-      ..style = PaintingStyle.fill;
-
     CellSizeController cellSizeButton = CellSizeController(
         cellSize: cellSize,
         cellSizeList: cellSizeList,
@@ -150,5 +154,18 @@ class GameHud extends PositionComponent with HasGameRef {
       ..position = Vector2(gameSize[0] - 250, 12);
 
     return cellSizeButton;
+  }
+
+  MusicButton createMusicButton() {
+    MusicButton musicButtonComponent = MusicButton(
+      onSprite: musicSprite,
+      offSprite: noMusicSprite,
+    )
+      ..size = Vector2(80, 80)
+      ..anchor = Anchor.topCenter
+      ..position = Vector2(260, 0)
+      ..sprite = musicSprite;
+
+    return musicButtonComponent;
   }
 }

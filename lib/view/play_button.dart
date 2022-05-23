@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:antoniogameoflife/audio/background_song.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 
 class PlayButton extends SpriteComponent with Tappable, Hoverable {
@@ -34,7 +35,7 @@ class PlayButton extends SpriteComponent with Tappable, Hoverable {
   bool onTapDown(TapDownInfo info) {
     print("start");
     startGame();
-    BackgroundSong().play();
+    BackgroundSong.play();
     return true;
   }
 
