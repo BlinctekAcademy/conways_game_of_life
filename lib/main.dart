@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'cubits/board_cubit.dart';
 import 'home_page.dart';
 
 void main() {
@@ -10,12 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Conway\'s Game of Life',
-      theme: ThemeData(
-        primarySwatch: Colors.yellow,
+    return BlocProvider(
+      create: (context) => BoardCubit(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.yellow,
+        ),
+        home: const MyHomePage(title: 'Conway\'s Game of Life',),
       ),
-      home: const MyHomePage(title: 'Conway\'s Game of Life'),
     );
   }
 }
