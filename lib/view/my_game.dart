@@ -53,12 +53,8 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
 
   GameOfLife createGame() {
     game = GameOfLife(
-        gameWidth: size[0].floor(),
-        gameHeight: size[1].floor() - 100,
-        cellSize: cellSize,
-        cellSprite: Sprite(
-          images.fromCache("cell_sprite.png"),
-        ));
+      cellSize: cellSize,
+    );
 
     return game;
   }

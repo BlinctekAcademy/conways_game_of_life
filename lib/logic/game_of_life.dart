@@ -2,29 +2,29 @@ import 'dart:async';
 import 'package:antoniogameoflife/logic/cell.dart';
 import 'package:flame/components.dart';
 
-class GameOfLife extends PositionComponent {
-  final int gameWidth;
-  final int gameHeight;
+class GameOfLife extends PositionComponent with HasGameRef {
   final double cellSize;
+  late int gameWidth;
+  late int gameHeight;
   late double cellWidthAmount;
   late double cellHeightAmount;
-  late Sprite cellSprite;
   List<List<Cell>> cells = [];
   bool clearGame = false;
   late PositionComponent board;
+  late Sprite cellSprite;
 
   GameOfLife({
-    required this.gameWidth,
-    required this.gameHeight,
     required this.cellSize,
-    required this.cellSprite,
-  }) {
-    cellWidthAmount = (gameWidth / cellSize).floorToDouble();
-    cellHeightAmount = (gameHeight / cellSize).floorToDouble();
-  }
+  });
 
   @override
   Future<void>? onLoad() async {
+    cellSprite = Sprite(gameRef.images.fromCache("cell_sprite.png"));
+    gameWidth = gameRef.size[0].floor();
+    gameHeight = gameRef.size[1].floor() - 100;
+    cellWidthAmount = (gameWidth / cellSize).floorToDouble();
+    cellHeightAmount = (gameHeight / cellSize).floorToDouble();
+
     renderBoard();
   }
 
