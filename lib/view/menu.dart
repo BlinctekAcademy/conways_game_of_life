@@ -6,11 +6,10 @@ import 'package:flame/widgets.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart' hide Image;
 
-class Menu extends PositionComponent {
-  double parentWidth;
+class Menu extends PositionComponent with HasGameRef {
+  late double parentWidth;
   late Timer clock;
   late Image playButtonImage;
-  late Image clearButtonImage;
   Function startGame;
 
   late PositionComponent titleComponent;
@@ -18,9 +17,6 @@ class Menu extends PositionComponent {
   late SpriteButton clearButton;
 
   Menu({
-    required this.parentWidth,
-    required this.playButtonImage,
-    required this.clearButtonImage,
     required this.startGame,
   });
 
@@ -28,10 +24,16 @@ class Menu extends PositionComponent {
   Future<void>? onLoad() async {
     await super.onLoad();
 
+    loadGameRef();
     createPlayButton();
     renderGameTitle();
     renderSubtitle();
     startTimer();
+  }
+
+  void loadGameRef() {
+    playButtonImage = gameRef.images.fromCache("play.png");
+    parentWidth = gameRef.size[0];
   }
 
   void startTimer() {

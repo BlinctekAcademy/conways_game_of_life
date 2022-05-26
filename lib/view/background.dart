@@ -1,18 +1,23 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-class Background extends PositionComponent {
-  final backgroundImage;
-  Vector2 screenSize;
+class Background extends PositionComponent with HasGameRef {
+  late final backgroundImage;
+  late Vector2 screenSize;
 
-  Background({required this.backgroundImage, required this.screenSize})
-      : super(anchor: Anchor.center);
+  Background() : super(anchor: Anchor.center);
 
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
 
+    loadGameRef();
     renderComponents();
+  }
+
+  void loadGameRef() {
+    backgroundImage = gameRef.images.fromCache("background.jpg");
+    screenSize = gameRef.size;
   }
 
   RectangleComponent renderBlind() {

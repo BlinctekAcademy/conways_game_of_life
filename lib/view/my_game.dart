@@ -67,9 +67,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
 
   void createMenu() {
     menu = Menu(
-      parentWidth: size[0],
-      playButtonImage: images.fromCache("play.png"),
-      clearButtonImage: images.fromCache("clear.png"),
       startGame: () {
         startGame();
         remove(menu);
@@ -162,9 +159,7 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
   }
 
   void renderBackground() {
-    Background bg = Background(
-        backgroundImage: images.fromCache("background.jpg"), screenSize: size);
-    add(bg);
+    add(Background());
   }
 
   @override
