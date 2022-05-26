@@ -24,14 +24,14 @@ class Menu extends PositionComponent with HasGameRef {
   Future<void>? onLoad() async {
     await super.onLoad();
 
-    loadGameRef();
+    loadAssets();
     createPlayButton();
     renderGameTitle();
     renderSubtitle();
     startTimer();
   }
 
-  void loadGameRef() {
+  void loadAssets() {
     playButtonImage = gameRef.images.fromCache("play.png");
     parentWidth = gameRef.size[0];
   }

@@ -2,19 +2,17 @@ import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 
-class CellSizeController extends PositionComponent {
+class CellSizeController extends PositionComponent with HasGameRef {
   double cellSize;
   final List<double> cellSizeList;
-  final Sprite plusSprite;
-  final Sprite minusSprite;
   final Function increase;
   final Function decrease;
+  late final Sprite plusSprite;
+  late final Sprite minusSprite;
 
   CellSizeController({
     required this.cellSize,
     required this.cellSizeList,
-    required this.plusSprite,
-    required this.minusSprite,
     required this.increase,
     required this.decrease,
   });
@@ -22,6 +20,7 @@ class CellSizeController extends PositionComponent {
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
+    loadAssets();
 
     SpriteButtonComponent plusButton = createIncreaseButton();
     SpriteButtonComponent minusButton = createDecreaseButton();
@@ -29,6 +28,11 @@ class CellSizeController extends PositionComponent {
     add(createText(label()));
     add(plusButton..position = Vector2(58, 0));
     add(minusButton..position = Vector2(-58, 0));
+  }
+
+  void loadAssets() {
+    plusSprite = Sprite(gameRef.images.fromCache('plus_button.png'));
+    minusSprite = Sprite(gameRef.images.fromCache('minus_button.png'));
   }
 
   SpriteButtonComponent createIncreaseButton() {

@@ -55,7 +55,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     game = GameOfLife(
       cellSize: cellSize,
     );
-
     return game;
   }
 

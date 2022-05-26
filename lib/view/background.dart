@@ -11,11 +11,11 @@ class Background extends PositionComponent with HasGameRef {
   Future<void>? onLoad() async {
     await super.onLoad();
 
-    loadGameRef();
+    loadAssets();
     renderComponents();
   }
 
-  void loadGameRef() {
+  void loadAssets() {
     backgroundImage = gameRef.images.fromCache("background.jpg");
     screenSize = gameRef.size;
   }

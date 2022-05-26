@@ -2,19 +2,17 @@ import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 
-class SpeedController extends PositionComponent {
+class SpeedController extends PositionComponent with HasGameRef {
   double gameSpeed;
   final List<double> gameSpeedList;
-  final Sprite plusSprite;
-  final Sprite minusSprite;
   final Function increaseSpeed;
   final Function decreaseSpeed;
+  late final Sprite plusSprite;
+  late final Sprite minusSprite;
 
   SpeedController({
     required this.gameSpeed,
     required this.gameSpeedList,
-    required this.plusSprite,
-    required this.minusSprite,
     required this.increaseSpeed,
     required this.decreaseSpeed,
   });
@@ -22,13 +20,18 @@ class SpeedController extends PositionComponent {
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
-
+    loadAssets();
     SpriteButtonComponent plusButton = createIncreaseButton();
     SpriteButtonComponent minusButton = createDecreaseButton();
 
     add(createText(speedLabel()));
     add(plusButton..position = Vector2(58, 0));
     add(minusButton..position = Vector2(-58, 0));
+  }
+
+  void loadAssets() {
+    plusSprite = Sprite(gameRef.images.fromCache("plus_button.png"));
+    minusSprite = Sprite(gameRef.images.fromCache("minus_button.png"));
   }
 
   SpriteButtonComponent createIncreaseButton() {

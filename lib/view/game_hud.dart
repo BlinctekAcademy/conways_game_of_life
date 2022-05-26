@@ -39,7 +39,6 @@ class GameHud extends PositionComponent with HasGameRef {
   Future<void>? onLoad() async {
     await super.onLoad();
     gameSize = gameRef.size;
-
     size = Vector2(gameRef.size[0], 100);
 
     RectangleComponent box = renderBox(gameSize);
@@ -107,8 +106,6 @@ class GameHud extends PositionComponent with HasGameRef {
     SpeedController clearButtonComponent = SpeedController(
         gameSpeed: gameSpeed,
         gameSpeedList: gameSpeedList,
-        plusSprite: Sprite(gameRef.images.fromCache("plus_button.png")),
-        minusSprite: Sprite(gameRef.images.fromCache("minus_button.png")),
         increaseSpeed: () {
           increaseSpeed();
         },
@@ -126,8 +123,6 @@ class GameHud extends PositionComponent with HasGameRef {
     CellSizeController cellSizeButton = CellSizeController(
         cellSize: cellSize,
         cellSizeList: cellSizeList,
-        plusSprite: Sprite(gameRef.images.fromCache("plus_button.png")),
-        minusSprite: Sprite(gameRef.images.fromCache("minus_button.png")),
         increase: () {
           increaseCellSize();
         },
@@ -142,17 +137,10 @@ class GameHud extends PositionComponent with HasGameRef {
   }
 
   MusicButton createMusicButton() {
-    Sprite onSprite = Sprite(gameRef.images.fromCache("music.png"));
-    Sprite offSprite = Sprite(gameRef.images.fromCache("no_music.png"));
-
-    MusicButton musicButtonComponent = MusicButton(
-      onSprite: onSprite,
-      offSprite: offSprite,
-    )
+    MusicButton musicButtonComponent = MusicButton()
       ..size = Vector2(80, 80)
       ..anchor = Anchor.topCenter
-      ..position = Vector2(260, 0)
-      ..sprite = onSprite;
+      ..position = Vector2(260, 0);
 
     return musicButtonComponent;
   }
