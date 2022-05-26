@@ -155,19 +155,6 @@ class GameOfLife extends PositionComponent with HasGameRef {
       add(board);
       clearGame = false;
     }
-
-    // Update cell sprite
-    for (int y = 0; y < cellHeightAmount; y++) {
-      for (int x = 0; x < cellWidthAmount; x++) {
-        Cell currentCell = cells[y][x];
-        if (currentCell.value == 1) {
-          currentCell.setOpacity(1);
-        }
-        if (currentCell.value == 0) {
-          currentCell.setOpacity(0);
-        }
-      }
-    }
   }
 
   execute() {

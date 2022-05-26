@@ -1,7 +1,16 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 
-class Cell extends SpriteComponent with Tappable {
+abstract class AbstractCell extends SpriteComponent with HasGameRef {
+  @override
+  Future<void>? onLoad() {
+    // TODO: implement onLoad
+    sprite = Sprite(gameRef.images.fromCache("cell_sprite.png"));
+    return super.onLoad();
+  }
+}
+
+class Cell extends AbstractCell with Tappable {
   int column;
   int line;
   late List<Cell> neighbors;
@@ -14,6 +23,12 @@ class Cell extends SpriteComponent with Tappable {
     this.value = 0,
     this.next = 0,
   });
+
+  @override
+  Future<void>? onLoad() {
+    setOpacity(0);
+    return super.onLoad();
+  }
 
   void killCell() {
     next = 0;
@@ -32,5 +47,16 @@ class Cell extends SpriteComponent with Tappable {
     value = 1;
     next = 1;
     return true;
+  }
+
+  @override
+  void update(double dt) {
+    if (value == 1) {
+      setOpacity(1);
+    } else if (paint.color.opacity == 1 && value == 0) {
+      setOpacity(0.08);
+    }
+
+    super.update(dt);
   }
 }
