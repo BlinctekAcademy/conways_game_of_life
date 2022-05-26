@@ -83,13 +83,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
 
   void createHud() {
     hud = GameHud(
-        clearSprite: Sprite(images.fromCache("clear.png")),
-        resumeSprite: Sprite(images.fromCache("resume.png")),
-        pauseSprite: Sprite(images.fromCache("pause.png")),
-        plusButtonSprite: Sprite(images.fromCache("plus_button.png")),
-        minusButtonSprite: Sprite(images.fromCache("minus_button.png")),
-        musicSprite: Sprite(images.fromCache("music.png")),
-        noMusicSprite: Sprite(images.fromCache("no_music.png")),
         timer: gameTick,
         gameSpeed: gameSpeedInSeconds,
         gameSpeedList: gameSpeedList,
@@ -161,16 +154,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
       add(game);
       add(hud);
     }
-  }
-
-  void toggleMusic() {
-    /*
-    if (music.isPlaying == false) {
-      music.play('song.mp3');
-    } else {
-      music.pause();
-    }
-    */
   }
 
   void restartTimer() {

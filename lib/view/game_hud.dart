@@ -10,13 +10,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class GameHud extends PositionComponent with HasGameRef {
-  final Sprite clearSprite;
-  final Sprite resumeSprite;
-  final Sprite pauseSprite;
-  final Sprite plusButtonSprite;
-  final Sprite minusButtonSprite;
-  final Sprite musicSprite;
-  final Sprite noMusicSprite;
   final GameOfLife game;
   final Function increaseSpeed;
   final Function decreaseSpeed;
@@ -30,13 +23,6 @@ class GameHud extends PositionComponent with HasGameRef {
   Timer timer;
 
   GameHud({
-    required this.clearSprite,
-    required this.resumeSprite,
-    required this.pauseSprite,
-    required this.plusButtonSprite,
-    required this.minusButtonSprite,
-    required this.musicSprite,
-    required this.noMusicSprite,
     required this.timer,
     required this.gameSpeed,
     required this.gameSpeedList,
@@ -87,12 +73,8 @@ class GameHud extends PositionComponent with HasGameRef {
   }
 
   SpriteButtonComponent renderClearButton() {
-    Paint paint1 = Paint()
-      ..color = Color.fromARGB(0, 0, 0, 0)
-      ..style = PaintingStyle.fill;
-
     SpriteButtonComponent clearButtonComponent = SpriteButtonComponent(
-      button: clearSprite,
+      button: Sprite(gameRef.images.fromCache("clear.png")),
       onPressed: () {
         game.clear();
       },
@@ -105,6 +87,9 @@ class GameHud extends PositionComponent with HasGameRef {
   }
 
   PauseButton renderPause() {
+    Sprite resumeSprite = Sprite(gameRef.images.fromCache("resume.png"));
+    Sprite pauseSprite = Sprite(gameRef.images.fromCache("pause.png"));
+
     PauseButton pause = PauseButton(
       timer: timer,
       resumeSprite: resumeSprite,
@@ -122,8 +107,8 @@ class GameHud extends PositionComponent with HasGameRef {
     SpeedController clearButtonComponent = SpeedController(
         gameSpeed: gameSpeed,
         gameSpeedList: gameSpeedList,
-        plusSprite: plusButtonSprite,
-        minusSprite: minusButtonSprite,
+        plusSprite: Sprite(gameRef.images.fromCache("plus_button.png")),
+        minusSprite: Sprite(gameRef.images.fromCache("minus_button.png")),
         increaseSpeed: () {
           increaseSpeed();
         },
@@ -141,8 +126,8 @@ class GameHud extends PositionComponent with HasGameRef {
     CellSizeController cellSizeButton = CellSizeController(
         cellSize: cellSize,
         cellSizeList: cellSizeList,
-        plusSprite: plusButtonSprite,
-        minusSprite: minusButtonSprite,
+        plusSprite: Sprite(gameRef.images.fromCache("plus_button.png")),
+        minusSprite: Sprite(gameRef.images.fromCache("minus_button.png")),
         increase: () {
           increaseCellSize();
         },
@@ -157,14 +142,17 @@ class GameHud extends PositionComponent with HasGameRef {
   }
 
   MusicButton createMusicButton() {
+    Sprite onSprite = Sprite(gameRef.images.fromCache("music.png"));
+    Sprite offSprite = Sprite(gameRef.images.fromCache("no_music.png"));
+
     MusicButton musicButtonComponent = MusicButton(
-      onSprite: musicSprite,
-      offSprite: noMusicSprite,
+      onSprite: onSprite,
+      offSprite: offSprite,
     )
       ..size = Vector2(80, 80)
       ..anchor = Anchor.topCenter
       ..position = Vector2(260, 0)
-      ..sprite = musicSprite;
+      ..sprite = onSprite;
 
     return musicButtonComponent;
   }
