@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:antoniogameoflife/view/play_button.dart';
+import 'package:antoniogameoflife/view/menu/play_button.dart';
 import 'package:flame/components.dart';
 import 'package:flame/widgets.dart';
 import 'package:flame_audio/bgm.dart';

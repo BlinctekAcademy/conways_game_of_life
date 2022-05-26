@@ -1,9 +1,9 @@
 import 'package:antoniogameoflife/audio/background_song.dart';
 import 'package:antoniogameoflife/logic/game_of_life.dart';
 import 'package:antoniogameoflife/view/background.dart';
-import 'package:antoniogameoflife/view/game_hud.dart';
-import 'package:antoniogameoflife/view/menu.dart';
-import 'package:antoniogameoflife/view/pause_button.dart';
+import 'package:antoniogameoflife/view/hud/game_hud.dart';
+import 'package:antoniogameoflife/view/menu/menu.dart';
+import 'package:antoniogameoflife/view/hud/pause_button.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame/components.dart';
@@ -34,8 +34,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     await images.load("minus_button.png");
     await images.load("music.png");
     await images.load("no_music.png");
-
-    // Background sprite
     await images.load("background.jpg");
 
     // Load music
@@ -49,6 +47,10 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     renderBackground();
 
     add(menu);
+  }
+
+  void renderBackground() {
+    add(Background());
   }
 
   GameOfLife createGame() {
@@ -92,7 +94,6 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
       gameSpeedInSeconds,
       onTick: () {
         game.execute();
-        print('tic');
       },
       repeat: true,
     );
@@ -100,6 +101,24 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     if (isPaused == true) {
       gameTick.pause();
     }
+  }
+
+  void restartTimer() {
+    bool isPaused = !gameTick.isRunning();
+    gameTick.stop();
+    startTimer(isPaused: isPaused);
+    remove(hud);
+    createHud();
+    add(hud);
+  }
+
+  void restartGame() {
+    remove(hud);
+    remove(game);
+    createGame();
+    createHud();
+    add(game);
+    add(hud);
   }
 
   void increaseSpeed() {
@@ -123,13 +142,7 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     if (index != -1 && index < cellSizeList.length) {
       cellSize = cellSizeList[index + 1];
       gameTick.stop();
-
-      remove(hud);
-      remove(game);
-      createGame();
-      createHud();
-      add(game);
-      add(hud);
+      restartGame();
     }
   }
 
@@ -138,27 +151,8 @@ class MyGame extends FlameGame with HasTappables, HasHoverables {
     if (index != -1 && index != 0) {
       cellSize = cellSizeList[index - 1];
       gameTick.stop();
-
-      remove(hud);
-      remove(game);
-      createGame();
-      createHud();
-      add(game);
-      add(hud);
+      restartGame();
     }
-  }
-
-  void restartTimer() {
-    bool isPaused = !gameTick.isRunning();
-    gameTick.stop();
-    startTimer(isPaused: isPaused);
-    remove(hud);
-    createHud();
-    add(hud);
-  }
-
-  void renderBackground() {
-    add(Background());
   }
 
   @override

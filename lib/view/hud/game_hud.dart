@@ -1,8 +1,8 @@
 import 'package:antoniogameoflife/logic/game_of_life.dart';
-import 'package:antoniogameoflife/view/cell_size_controller.dart';
-import 'package:antoniogameoflife/view/music_button.dart';
-import 'package:antoniogameoflife/view/pause_button.dart';
-import 'package:antoniogameoflife/view/speed_controller.dart';
+import 'package:antoniogameoflife/view/hud/cell_size_controller.dart';
+import 'package:antoniogameoflife/view/hud/music_button.dart';
+import 'package:antoniogameoflife/view/hud/pause_button.dart';
+import 'package:antoniogameoflife/view/hud/speed_controller.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flame_audio/bgm.dart';

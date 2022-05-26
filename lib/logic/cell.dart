@@ -29,7 +29,6 @@ class Cell extends SpriteComponent with Tappable {
 
   @override
   bool onTapDown(TapDownInfo info) {
-    print('activate cell $column $line');
     value = 1;
     next = 1;
     return true;
