@@ -48,6 +48,20 @@ class GameOfLife {
           testCoordinates[z][1] > -1 &&
           testCoordinates[z][1] < board[0].length) {
         validCoordinates.add(testCoordinates[z]);
+      } else {
+        if (testCoordinates[z][0] == -1) {
+          testCoordinates[z][0] = board.length - 1;
+        }
+        if (testCoordinates[z][1] == -1) {
+          testCoordinates[z][1] = board.length - 1;
+        }
+        if (testCoordinates[z][0] == board.length) {
+          testCoordinates[z][0] = 0;
+        }
+        if (testCoordinates[z][1] == board.length) {
+          testCoordinates[z][1] = 0;
+        }
+        validCoordinates.add(testCoordinates[z]);
       }
     }
 
