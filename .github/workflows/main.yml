@@ -1,0 +1,63 @@
+# This is a basic workflow to help you get started with Actions
+
+name: marianne_of_life Web Release CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the spoon branch
+  push:
+    branches: 
+      - spoon
+  pull_request:
+    branches: [ spoon ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    
+# on: push    # Default will running for every branch.
+    
+jobs:
+  build:
+    env:
+      my_secret: ${{secrets.commit_secret}}
+    # This job will run on ubuntu virtual machine
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v1
+    
+    # Setup the flutter environment.
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable' # 'dev', 'alpha', default to: 'stable' - was set to beta
+        # flutter-version: '1.12.x' # you can also specify exact version of flutter
+  
+    # Get flutter dependencies.
+    - run: flutter pub get
+    # create the release version of the site on the virtual machine
+    - run: flutter build web
+    
+    # configure the index.html file to run correctly on the github pages platform
+    - run: cat index.html
+      working-directory: /home/runner/work/marianne_of_life/marianne_of_life/build/web
+    - run: sed -i '/base href/d' index.html #For MacOS : sed -i '' '/base href/d' index.html
+      working-directory: /home/runner/work/marianne_of_life/marianne_of_life/build/web
+    - run: cat index.html
+      working-directory: /home/runner/work/marianne_of_life/marianne_of_life/build/web
+      
+    # push the release version
+    - run: |
+          cd build/web
+          git init
+          # type configurations: your user.email and user.name followed lines 
+          # git config --global user.email your_email 
+          # git config --global user.name your_name 
+          git config --global user.email gtsrex@gmail.com
+          git config --global user.name GregSym
+          git status
+          # change this remote url for examle your remote url is https://github.com/onatcipli/flutter_web.git then the following:
+          git remote add origin https://${{secrets.commit_secret}}@github.com/GregSym/marianne_of_life.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "update"
+          git push origin gh-pages -f
