@@ -21,9 +21,7 @@ class Game {
     while (!isPaused) {
       await Future.delayed(Duration(milliseconds: delayInMilliseconds), (() {
         updateScreen(() {
-          for (int i = 0; i < 1; i++) {
-            createGenerations();
-          }
+          createGenerations();
         });
       }));
     }
