@@ -1,20 +1,21 @@
 
+import 'package:conways/cubits/tile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubits/board_cubit.dart';
 import '../widgets/cell.dart';
 
-class GameOfLifeScreen extends StatefulWidget {
+class GameOfLife extends StatefulWidget {
   final String title;
-  const GameOfLifeScreen({Key? key, required this.title}) : super(key: key);
+  const GameOfLife({Key? key, required this.title}) : super(key: key);
 
   
 
   @override
-  _GameOfLifeScreenState createState() => _GameOfLifeScreenState();
+  _GameOfLife createState() => _GameOfLife();
 }
 
-class _GameOfLifeScreenState extends State<GameOfLifeScreen> {
+class _GameOfLife extends State<GameOfLife> {
   final dimension = 20.0;
   late int rowCount, columnCount;
 
@@ -30,41 +31,66 @@ class _GameOfLifeScreenState extends State<GameOfLifeScreen> {
     boardCubit.initBoard(rows: rowCount, columns: columnCount);
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 241, 236, 200),
       appBar: AppBar(
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Column(
+      body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          for (final i in List.generate(rowCount, (i) => i))
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (final j in List.generate(columnCount, (i) => i))
-                  Tile(
-                    dimension: dimension,
-                    tileCubit: boardCubit.tileCubits[i][j],
-                  ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            for (final i in List.generate(rowCount, (i) => i))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (final j in List.generate(columnCount, (i) => i))
+                    Tile(
+                      dimension: dimension,
+                      tileCubit: boardCubit.tileCubits[i][j],
+                    ),
+                ],
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MaterialButton(
+                color: Colors.yellow,
+                shape: const CircleBorder(),
                 onPressed: () {
                   boardCubit.forward();
                 },
-                child: const Text("Start", style: TextStyle(color: Colors.black),),
+                child: const Icon(
+                    Icons.start,
+                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: MaterialButton(
+                  color: Colors.yellow,
+                  shape: const CircleBorder(),
+                  onPressed: () {
+                    boardCubit.pause();
+                  },
+                  child: const Icon(
+                      Icons.stop,
+                    ),
                 ),
-                TextButton(
-                onPressed: () {
-                  boardCubit.pause(); //fix
-                },
-                child: const Text("Stop", style: TextStyle(color: Colors.black),),
+              ),
+              MaterialButton(
+                color: Colors.yellow,
+                shape: const CircleBorder(),
+                onPressed: () {},
+                child: const Icon(
+                    Icons.autorenew,
+                  ),
                 ),
-              ],
-            ),
+            ],
+          ),
         ],
       ),
     );

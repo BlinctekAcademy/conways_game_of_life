@@ -12,10 +12,10 @@ class TilePosition {
   TilePosition(this.row, this.col);
 }
 
-class NeighborStat {
+class NeighborState {
   int aliveNeighbours, deadNeighbours;
   List<TilePosition>? neighbours;
-  NeighborStat(this.aliveNeighbours, this.deadNeighbours, this.neighbours);
+  NeighborState(this.aliveNeighbours, this.deadNeighbours, this.neighbours);
 }
 
 class BoardCubit extends Cubit<BoardState> {
@@ -45,7 +45,7 @@ class BoardCubit extends Cubit<BoardState> {
   }
 
   void forward() {
-    if (_timer != null) return;
+    //if (_timer != null) return;
 
     _timer = Timer.periodic(const Duration(milliseconds: 100), (_) {
       if (!computing) nextGeneration();
@@ -54,6 +54,10 @@ class BoardCubit extends Cubit<BoardState> {
 
   void pause() {
     _timer?.cancel();
+  }
+
+  void clear(){
+    
   }
 
   void nextGeneration() {
@@ -85,7 +89,8 @@ class BoardCubit extends Cubit<BoardState> {
     computing = false;
   }
 
-  NeighborStat getNeighbourStat(TilePosition pos) {
+
+  NeighborState getNeighbourStat(TilePosition pos) {
     List<TilePosition> neighbours = [];
     int aliveCount = 0, deadCount = 0;
 
@@ -151,6 +156,6 @@ class BoardCubit extends Cubit<BoardState> {
       }
     }
 
-    return NeighborStat(aliveCount, deadCount, neighbours);
+    return NeighborState(aliveCount, deadCount, neighbours);
   }
 }
