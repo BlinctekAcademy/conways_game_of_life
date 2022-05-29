@@ -64,7 +64,7 @@ class SpeedController extends PositionComponent with HasGameRef {
     const style = TextStyle(
       fontFamily: 'pixeloid',
       fontSize: 25,
-      color: Color.fromARGB(255, 255, 255, 255),
+      color: Colors.white,
     );
     final regular = TextPaint(style: style);
     TextComponent text = TextComponent(text: string, textRenderer: regular)

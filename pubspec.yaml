@@ -69,6 +69,8 @@ flutter:
     - assets/images/minus_button.png
     - assets/images/music.png
     - assets/images/no_music.png
+    - assets/images/standard_button.png
+    - assets/images/pressed_standard_button.png
     - assets/audio/song.mp3
     - assets/fonts/perfect.ttf
     - assets/fonts/pixeloid.ttf

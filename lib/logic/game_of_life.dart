@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:antoniogameoflife/logic/cell.dart';
+import 'package:antoniogameoflife/view/pattern/patterns.dart';
 import 'package:flame/components.dart';
+import 'package:flame/input.dart';
+import 'package:flutter/foundation.dart';
 
 class GameOfLife extends PositionComponent with HasGameRef {
   final double cellSize;
-  late int gameWidth;
-  late int gameHeight;
-  late double cellWidthAmount;
-  late double cellHeightAmount;
+  late final int gameWidth;
+  late final int gameHeight;
+  late final double cellWidthAmount;
+  late final double cellHeightAmount;
   List<List<Cell>> cells = [];
   bool clearGame = false;
   late PositionComponent board;
@@ -20,7 +23,7 @@ class GameOfLife extends PositionComponent with HasGameRef {
   @override
   Future<void>? onLoad() async {
     cellSprite = Sprite(gameRef.images.fromCache("cell_sprite.png"));
-    gameWidth = gameRef.size[0].floor();
+    gameWidth = gameRef.size[0].floor() - 50;
     gameHeight = gameRef.size[1].floor() - 100;
     cellWidthAmount = (gameWidth / cellSize).floorToDouble();
     cellHeightAmount = (gameHeight / cellSize).floorToDouble();

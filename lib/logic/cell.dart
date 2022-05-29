@@ -1,7 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
-abstract class AbstractCell extends SpriteComponent with HasGameRef {
+abstract class AbstractCell extends SpriteComponent
+    with HasGameRef, KeyboardHandler, Hoverable {
   @override
   Future<void>? onLoad() {
     // TODO: implement onLoad
@@ -44,8 +47,14 @@ class Cell extends AbstractCell with Tappable {
 
   @override
   bool onTapDown(TapDownInfo info) {
-    value = 1;
-    next = 1;
+    if (value == 0) {
+      value = 1;
+      next = 1;
+    } else {
+      value = 0;
+      next = 0;
+    }
+
     return true;
   }
 
@@ -54,9 +63,24 @@ class Cell extends AbstractCell with Tappable {
     if (value == 1) {
       setOpacity(1);
     } else if (paint.color.opacity == 1 && value == 0) {
-      setOpacity(0.08);
+      setOpacity(0.06);
     }
 
     super.update(dt);
+  }
+
+  @override
+  bool onKeyEvent(
+    RawKeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    final isKeyDown = event is RawKeyDownEvent;
+
+    final isSpace = keysPressed.contains(LogicalKeyboardKey.space);
+    if (isSpace && isKeyDown && isHovered) {
+      value = 1;
+      next = 1;
+    }
+    return true;
   }
 }

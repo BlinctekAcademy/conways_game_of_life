@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:antoniogameoflife/view/menu/play_button.dart';
+import 'package:antoniogameoflife/view/palette/palette.dart';
 import 'package:flame/components.dart';
 import 'package:flame/widgets.dart';
 import 'package:flame_audio/bgm.dart';
@@ -63,10 +64,10 @@ class Menu extends PositionComponent with HasGameRef {
       fontSize: 60,
       color: Color.fromARGB(255, 255, 255, 255),
     );
-    const shadowStyle = TextStyle(
+    final shadowStyle = TextStyle(
       fontFamily: 'perfect',
       fontSize: 60,
-      color: Color.fromARGB(255, 212, 39, 134),
+      color: Palette.pink,
     );
 
     final regular = TextPaint(style: mainStyle);

@@ -4,8 +4,8 @@ import 'package:flame_audio/flame_audio.dart';
 
 class BackgroundSong extends FlameAudio {
   static void initialize() async {
-    await FlameAudio.bgm.audioCache.load('song.mp3');
     FlameAudio.bgm.stop();
+    await FlameAudio.bgm.audioCache.load('song.mp3');
   }
 
   static void play() {

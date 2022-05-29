@@ -1,3 +1,4 @@
+import 'package:antoniogameoflife/logic/cell.dart';
 import 'package:antoniogameoflife/logic/game_of_life.dart';
 import 'package:antoniogameoflife/view/hud/cell_size_controller.dart';
 import 'package:antoniogameoflife/view/hud/music_button.dart';
@@ -53,7 +54,7 @@ class GameHud extends PositionComponent with HasGameRef {
       clearButton,
       speedController,
       cellSizeController,
-      musicButton
+      musicButton,
     ]);
     add(box);
   }

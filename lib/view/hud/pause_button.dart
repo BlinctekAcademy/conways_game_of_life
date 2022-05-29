@@ -29,4 +29,17 @@ class PauseButton extends SpriteComponent with Tappable {
 
     return true;
   }
+
+  @override
+  void update(double dt) {
+    if (timer.isRunning() && sprite == resumeSprite) {
+      sprite = pauseSprite;
+    }
+
+    if (!timer.isRunning() && sprite == pauseSprite) {
+      sprite = resumeSprite;
+    }
+
+    super.update(dt);
+  }
 }
