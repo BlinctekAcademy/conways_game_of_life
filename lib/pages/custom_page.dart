@@ -65,7 +65,7 @@ class _GameOfLife extends State<GameOfLife> {
                   boardCubit.forward();
                 },
                 child: const Icon(
-                    Icons.start,
+                    Icons.arrow_right, size: 30,
                   ),
               ),
               Padding(
@@ -77,18 +77,10 @@ class _GameOfLife extends State<GameOfLife> {
                     boardCubit.pause();
                   },
                   child: const Icon(
-                      Icons.stop,
+                      Icons.stop, size: 20,
                     ),
                 ),
               ),
-              MaterialButton(
-                color: Colors.yellow,
-                shape: const CircleBorder(),
-                onPressed: () {},
-                child: const Icon(
-                    Icons.autorenew,
-                  ),
-                ),
             ],
           ),
         ],
