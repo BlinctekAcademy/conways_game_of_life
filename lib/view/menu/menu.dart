@@ -4,7 +4,6 @@ import 'package:antoniogameoflife/view/menu/play_button.dart';
 import 'package:antoniogameoflife/view/palette/palette.dart';
 import 'package:flame/components.dart';
 import 'package:flame/widgets.dart';
-import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart' hide Image;
 
 class Menu extends PositionComponent with HasGameRef {
