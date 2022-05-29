@@ -44,9 +44,18 @@ class Game {
   }
 
   void restart() {
-    isPaused = true;
+    pause();
+    currentGeneration = 0;
+    generations = [];
+    generations.add(Board(rowCount: boardSize, columnCount: boardSize));
     updateScreen(() {
       board.representation = board.render();
+    });
+  }
+
+  void random() {
+    updateScreen(() {
+      board.representation = board.randomRender();
     });
   }
 

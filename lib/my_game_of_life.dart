@@ -29,21 +29,29 @@ class _MyGameOfLifeState extends State<MyGameOfLife> {
                     tooltip: 'Play',
                     icon: const Icon(Icons.play_arrow)),
                 MyButton(
-                    function: game!.pause,
-                    tooltip: 'Pause',
-                    icon: const Icon(Icons.pause)),
-                MyButton(
                     function: game!.accelerate,
                     tooltip: 'Accelerate',
                     icon: const Icon(Icons.skip_next)),
+                MyButton(
+                    function: game!.restart,
+                    tooltip: 'Restart',
+                    icon: const Icon(Icons.restart_alt)),
+              ],
+            ),
+            Column(
+              children: [
+                MyButton(
+                    function: game!.pause,
+                    tooltip: 'Pause',
+                    icon: const Icon(Icons.pause)),
                 MyButton(
                     function: game!.decelerate,
                     tooltip: 'Decelerate',
                     icon: const Icon(Icons.skip_previous)),
                 MyButton(
-                    function: game!.restart,
-                    tooltip: 'Restart',
-                    icon: const Icon(Icons.restart_alt))
+                    function: game!.random,
+                    tooltip: 'Random',
+                    icon: const Icon(Icons.shuffle))
               ],
             ),
             GameOfLifeGrid(game: game!),

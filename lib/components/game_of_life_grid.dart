@@ -16,7 +16,7 @@ class _GameOfLifeGridState extends State<GameOfLifeGrid> {
     return Container(
       margin: const EdgeInsets.only(
         top: 150,
-        left: 300,
+        left: 200,
       ),
       child: SizedBox(
         width: 600,

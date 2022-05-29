@@ -15,9 +15,9 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 80, left: 30),
+      margin: const EdgeInsets.only(top: 160, left: 10),
       child: SizedBox(
-        width: 400,
+        width: 230,
         height: 90,
         child: FloatingActionButton(
             onPressed: (() {

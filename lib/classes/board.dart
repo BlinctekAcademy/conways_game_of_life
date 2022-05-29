@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Board {
   int rowCount;
   int columnCount;
@@ -17,6 +19,18 @@ class Board {
       board.add([]);
       for (int j = 0; j < rowCount; j++) {
         board[i].add(false);
+      }
+    }
+    return board;
+  }
+
+  List<List<bool>> randomRender() {
+    List<List<bool>> board = [];
+
+    for (int i = 0; i < columnCount; i++) {
+      board.add([]);
+      for (int j = 0; j < rowCount; j++) {
+        board[i].add(Random().nextBool());
       }
     }
     return board;
