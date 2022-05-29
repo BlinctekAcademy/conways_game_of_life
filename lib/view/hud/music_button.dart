@@ -1,7 +1,6 @@
 import 'package:antoniogameoflife/audio/background_song.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
-import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 
 class MusicButton extends SpriteComponent with Tappable, HasGameRef {

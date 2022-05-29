@@ -1,8 +1,9 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
 
 class Background extends PositionComponent with HasGameRef {
-  late final backgroundImage;
+  late final Image backgroundImage;
   late Vector2 screenSize;
 
   Background() : super(anchor: Anchor.center);

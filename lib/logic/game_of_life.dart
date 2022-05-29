@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:antoniogameoflife/logic/cell.dart';
-import 'package:antoniogameoflife/view/pattern/patterns.dart';
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
-import 'package:flutter/foundation.dart';
 
 class GameOfLife extends PositionComponent with HasGameRef {
   final double cellSize;

@@ -1,10 +1,6 @@
-import 'dart:ui';
-
 import 'package:antoniogameoflife/audio/background_song.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
-import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/cupertino.dart';
 
 class PlayButton extends SpriteComponent with Tappable, Hoverable {
   double parentWidth;
@@ -33,19 +29,8 @@ class PlayButton extends SpriteComponent with Tappable, Hoverable {
 
   @override
   bool onTapDown(TapDownInfo info) {
-    print("start");
     startGame();
     BackgroundSong.play();
-    return true;
-  }
-
-  bool onHoverEnter(PointerHoverInfo info) {
-    print("hover enter");
-    return true;
-  }
-
-  bool onHoverLeave(PointerHoverInfo info) {
-    print("hover leave");
     return true;
   }
 }

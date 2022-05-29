@@ -1,4 +1,3 @@
-import 'package:antoniogameoflife/logic/cell.dart';
 import 'package:antoniogameoflife/logic/game_of_life.dart';
 import 'package:antoniogameoflife/view/hud/cell_size_controller.dart';
 import 'package:antoniogameoflife/view/hud/music_button.dart';
@@ -6,7 +5,6 @@ import 'package:antoniogameoflife/view/hud/pause_button.dart';
 import 'package:antoniogameoflife/view/hud/speed_controller.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
-import 'package:flame_audio/bgm.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
@@ -61,7 +59,7 @@ class GameHud extends PositionComponent with HasGameRef {
 
   RectangleComponent renderBox(Vector2 gameSize) {
     Paint paint1 = Paint()
-      ..color = Color.fromARGB(0, 0, 0, 0)
+      ..color = const Color.fromARGB(0, 0, 0, 0)
       ..style = PaintingStyle.fill;
     Rect rectangle =
         Rect.fromLTWH(0, gameSize[1] - 100, gameSize[0], gameSize[1]);

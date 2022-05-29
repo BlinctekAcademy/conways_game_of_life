@@ -1,13 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 abstract class AbstractCell extends SpriteComponent
     with HasGameRef, KeyboardHandler, Hoverable {
   @override
   Future<void>? onLoad() {
-    // TODO: implement onLoad
     sprite = Sprite(gameRef.images.fromCache("cell_sprite.png"));
     return super.onLoad();
   }
