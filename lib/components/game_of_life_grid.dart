@@ -15,7 +15,7 @@ class _GameOfLifeGridState extends State<GameOfLifeGrid> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 150,
+        top: 30,
         left: 200,
       ),
       child: SizedBox(
